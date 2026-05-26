@@ -9,7 +9,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import UploadBook from "./pages/UploadBook";
 import BookDetail from "./pages/BookDetail";
-import EditBook from "./pages/EditBook";  // <-- ⚡ ADD THIS
+import EditBook from "./pages/EditBook";  // 
 
 import { isAdmin } from "./utils/auth";
 
