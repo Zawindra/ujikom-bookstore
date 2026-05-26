@@ -4,9 +4,9 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
-import Home from "./pages/home";
-import Login from "./pages/login";
-import Register from "./pages/register";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import UploadBook from "./pages/UploadBook";
 import BookDetail from "./pages/BookDetail";
 import EditBook from "./pages/EditBook";  // <-- ⚡ ADD THIS
