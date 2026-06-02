@@ -50,7 +50,7 @@ export default function BookCard({ book }) {
         <img
           src={
             book.cover_url
-              ? `http://localhost:4000${book.cover_url}`
+              ? book.cover_url
               : "https://via.placeholder.com/200x280.png?text=No+Cover"
           }
           style={{

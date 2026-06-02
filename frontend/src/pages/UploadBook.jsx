@@ -41,7 +41,7 @@ export default function UploadBook() {
     if (cover) formData.append("cover", cover);
 
     try {
-      await axios.post("http://localhost:4000/api/books", formData, {
+      await axios.post(`${API}/api/books`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${getToken()}`,

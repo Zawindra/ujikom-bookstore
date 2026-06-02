@@ -18,7 +18,7 @@ export default function Home() {
 
   const fetchBooks = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/books");
+      const res = await axios.get(`${API}/api/books`);
       const data = res.data.data || res.data;
 
       setBooks(data);
@@ -36,7 +36,7 @@ export default function Home() {
       results = results.filter((book) =>
         `${book.title} ${book.author}`
           .toLowerCase()
-          .includes(searchTerm.toLowerCase())
+          .includes(searchTerm.toLowerCase()),
       );
     }
 

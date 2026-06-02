@@ -2,15 +2,22 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const API = import.meta.env.VITE_API_URL;
+
 export default function AddBook() {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
     title: "",
     author: "",
-    year: "",
+    price: "",
     genre: "",
+    year: "",
+    discount: "",
+    description: "",
   });
+
+  const [cover, setCover] = useState(null);
 
   const input = {
     width: "100%",
@@ -37,8 +44,33 @@ export default function AddBook() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:4000/api/books", form);
-    navigate("/");
+
+    try {
+      const data = new FormData();
+
+      data.append("title", form.title);
+      data.append("author", form.author);
+      data.append("price", form.price);
+      data.append("genre", form.genre);
+      data.append("year", form.year);
+      data.append("discount", form.discount);
+      data.append("description", form.description);
+
+      if (cover) {
+        data.append("cover", cover);
+      }
+
+      await axios.post(`${API}/api/books`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      alert("Failed to add book");
+    }
   };
 
   return (
@@ -48,8 +80,24 @@ export default function AddBook() {
       <form onSubmit={handleSubmit}>
         <input name="title" placeholder="Title" style={input} onChange={handleChange} />
         <input name="author" placeholder="Author" style={input} onChange={handleChange} />
+        <input name="price" placeholder="Price" style={input} onChange={handleChange} />
         <input name="year" placeholder="Year" style={input} onChange={handleChange} />
+        <input name="discount" placeholder="Discount" style={input} onChange={handleChange} />
         <input name="genre" placeholder="Genre" style={input} onChange={handleChange} />
+
+        <textarea
+          name="description"
+          placeholder="Description"
+          style={input}
+          onChange={handleChange}
+        />
+
+        <input
+          type="file"
+          accept="image/*"
+          style={input}
+          onChange={(e) => setCover(e.target.files[0])}
+        />
 
         <button style={btn}>Save</button>
       </form>

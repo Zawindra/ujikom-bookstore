@@ -15,7 +15,7 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:4000/api/auth/login", {
+      const res = await axios.post(`${API}/api/auth/login`, {
         email,
         password,
       });
@@ -100,10 +100,7 @@ export default function Login() {
               style={{ ...inputStyle, width: "100%" }}
             />
 
-            <span
-              onClick={() => setShowPass(!showPass)}
-              style={eyeStyle}
-            >
+            <span onClick={() => setShowPass(!showPass)} style={eyeStyle}>
               <i
                 className={
                   showPass ? "fa-solid fa-eye-slash" : "fa-solid fa-eye"

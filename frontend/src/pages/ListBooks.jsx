@@ -41,7 +41,7 @@ export default function ListBooks() {
   };
 
   const fetchBooks = async () => {
-    const res = await axios.get("http://localhost:4000/api/books");
+    const res = await axios.get(`${API}/api/books`);
     setBooks(Array.isArray(res.data) ? res.data : []);
   };
 
@@ -93,7 +93,9 @@ export default function ListBooks() {
             ))
           ) : (
             <tr>
-              <td style={td} colSpan="6">No books found</td>
+              <td style={td} colSpan="6">
+                No books found
+              </td>
             </tr>
           )}
         </tbody>

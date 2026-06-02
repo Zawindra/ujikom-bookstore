@@ -22,12 +22,21 @@ export async function getBookById(req, res, next) {
 
 export async function createBook(req, res, next) {
   try {
-    const { title, author, price, genre, year, discount, description } =
-      req.body;
+    const {
+      title,
+      author,
+      price,
+      genre,
+      year,
+      discount,
+      description,
+    } = req.body;
 
     let cover_url = null;
+
+    // URL gambar dari Cloudinary
     if (req.file) {
-      cover_url = `/uploads/${req.file.filename}`;
+      cover_url = req.file.path;
     }
 
     const newBook = await bookService.createBook({
@@ -41,7 +50,7 @@ export async function createBook(req, res, next) {
       cover_url,
     });
 
-    res.json({
+    res.status(201).json({
       message: "Book created successfully",
       data: newBook,
     });
@@ -54,14 +63,21 @@ export async function updateBook(req, res, next) {
   try {
     const id = req.params.id;
 
-    const { title, author, price, genre, year, discount, description } =
-      req.body;
+    const {
+      title,
+      author,
+      price,
+      genre,
+      year,
+      discount,
+      description,
+    } = req.body;
 
     let cover_url = req.body.cover_url || null;
 
-    // Jika upload file baru
+    // Jika upload cover baru ke Cloudinary
     if (req.file) {
-      cover_url = `/uploads/${req.file.filename}`;
+      cover_url = req.file.path;
     }
 
     const updatedBook = await bookService.updateBook(id, {
@@ -90,7 +106,9 @@ export async function deleteBook(req, res, next) {
 
     await bookService.deleteBook(id);
 
-    res.json({ message: "Book deleted successfully" });
+    res.json({
+      message: "Book deleted successfully",
+    });
   } catch (error) {
     next(error);
   }

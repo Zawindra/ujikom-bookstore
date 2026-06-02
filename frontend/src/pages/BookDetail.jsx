@@ -15,7 +15,7 @@ export default function BookDetail() {
 
   const fetchBook = async () => {
     try {
-      const res = await axios.get(`http://localhost:4000/api/books/${id}`);
+      const res = await axios.get(`${API}/api/books/${id}`);
       setBook(res.data.data || res.data);
     } catch (error) {
       console.log(error);
@@ -26,50 +26,50 @@ export default function BookDetail() {
   // ADD TO CART (WITH QTY)
   // =========================
   const handleAddToCart = () => {
-  if (!isLoggedIn()) {
-    return Swal.fire({
-      title: "Login Required",
-      text: "You need an account to buy this book.",
-      icon: "info",
-      showCancelButton: true,
-      confirmButtonColor: "#0b63a8",
-      cancelButtonColor: "#6c757d",
-      confirmButtonText: "Login Now",
-      cancelButtonText: "Cancel",
-      reverseButtons: true,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        navigate("/login");
-      }
+    if (!isLoggedIn()) {
+      return Swal.fire({
+        title: "Login Required",
+        text: "You need an account to buy this book.",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "#0b63a8",
+        cancelButtonColor: "#6c757d",
+        confirmButtonText: "Login Now",
+        cancelButtonText: "Cancel",
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        }
+      });
+    }
+
+    // If logged in → normal add to cart
+    let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+    const exist = cart.find((c) => c.id === book.id);
+
+    if (exist) {
+      exist.qty += 1;
+    } else {
+      cart.push({
+        id: book.id,
+        title: book.title,
+        qty: 1,
+      });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    Swal.fire({
+      icon: "success",
+      title: "Added to Cart!",
+      text: `"${book.title}" has been added to your cart.`,
+      confirmButtonColor: "#28a745",
     });
-  }
 
-  // If logged in → normal add to cart
-  let cart = JSON.parse(localStorage.getItem("cart") || "[]");
-
-  const exist = cart.find((c) => c.id === book.id);
-
-  if (exist) {
-    exist.qty += 1;
-  } else {
-    cart.push({
-      id: book.id,
-      title: book.title,
-      qty: 1,
-    });
-  }
-
-  localStorage.setItem("cart", JSON.stringify(cart));
-
-  Swal.fire({
-    icon: "success",
-    title: "Added to Cart!",
-    text: `"${book.title}" has been added to your cart.`,
-    confirmButtonColor: "#28a745",
-  });
-
-  window.dispatchEvent(new Event("storage"));
-};
+    window.dispatchEvent(new Event("storage"));
+  };
 
   // =========================
 
