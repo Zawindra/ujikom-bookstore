@@ -25,17 +25,3 @@ app.use(cors({
 }));
 
 app.use(express.json());
-
-// Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/books", bookRoutes);
-app.use("/api/users", userRoutes);
-
-// Error handler
-app.use(errorHandler);
-
-// Start server
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
