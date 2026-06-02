@@ -11,6 +11,8 @@ export default function Register() {
 
   const navigate = useNavigate();
 
+  const API = import.meta.env.VITE_API_URL;
+
   const handleRegister = async (e) => {
     e.preventDefault();
 

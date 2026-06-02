@@ -5,12 +5,15 @@ import { saveAuth } from "../utils/auth";
 import { useNavigate, Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
 
   const navigate = useNavigate();
+
+  const API = import.meta.env.VITE_API_URL;
 
   const handleLogin = async (e) => {
     e.preventDefault();
