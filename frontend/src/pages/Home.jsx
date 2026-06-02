@@ -18,8 +18,7 @@ export default function Home() {
 
   const fetchBooks = async () => {
     try {
-      // const res = await axios.get("http://localhost:4000/api/books");
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/books`);
+      const res = await axios.get("http://localhost:4000/api/books");
       const data = res.data.data || res.data;
 
       setBooks(data);

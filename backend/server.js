@@ -12,29 +12,27 @@ dotenv.config();
 
 const app = express();
 
-// FIX __dirname untuk ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Middleware dasar
 app.use(cors());
 app.use(express.json());
 
-// STATIC UPLOADS (WAJIB UNTUK MENAMPILKAN GAMBAR)
-app.use("/uploads", express.static("uploads"));
-app.use("/api/books", bookRoutes);
+app.use(
+  "/uploads",
+  express.static(path.join(__dirname, "uploads"))
+);
 
-// ROUTES
 app.use("/api/books", bookRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 
-// DEFAULT ROUTE
 app.get("/", (req, res) => {
   res.send("Book Store API is running...");
 });
 
-// RUN SERVER
-app.listen(4000, () =>
-  console.log("🚀 Server running on http://localhost:4000")
-);
+const PORT = process.env.PORT || 4000;
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});

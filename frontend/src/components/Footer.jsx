@@ -7,7 +7,7 @@ export default function Footer() {
       marginTop: 40
     }}>
       <div style={{ width: "90%", maxWidth: 1100, margin: "0 auto", color: "#6b7280" }}>
-        © {new Date().getFullYear()} BookStore — SAS project
+        © {new Date().getFullYear()} BookStore — BNSP project
       </div>
     </footer>
   );
