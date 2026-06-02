@@ -1,4 +1,4 @@
-export function errorHandler(err, req, res, next) {
+function errorHandler(err, req, res, next) {
   console.error(err);
   // If Zod validation error, return detail
   if (err?.issues) {
@@ -6,3 +6,5 @@ export function errorHandler(err, req, res, next) {
   }
   res.status(500).json({ message: err.message || "Internal server error" });
 }
+
+export default errorHandler;
