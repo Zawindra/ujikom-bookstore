@@ -1,30 +1,23 @@
-import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
-
-import bookRoutes from "./routes/bookRoutes.js";
-import authRoutes from "./routes/authRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
-
-dotenv.config();
+import express from "express";
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://ujikom-bookstore-hfv3.vercel.app"
+];
+
 app.use(cors({
-  origin: "*"
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error("Blocked by CORS"));
+  },
+  credentials: true
 }));
 
 app.use(express.json());
-
-// ROUTES
-app.use("/api/books", bookRoutes);
-app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
-
-// TEST
-app.get("/", (req, res) => {
-  res.send("Book Store API is running...");
-});
-
-// ❗ WAJIB UNTUK VERCEL
-export default app;
